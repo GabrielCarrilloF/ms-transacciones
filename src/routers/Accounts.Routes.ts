@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAccounts, CreateAccount } from '../controllers/Accounts.Controller';
+import { getAccount, getAccountsByUser, CreateAccount, updateAccount } from '../controllers/Accounts.Controller';
 
 const router = Router();
 
@@ -11,8 +11,16 @@ router.route('/')
         });
     });
 
-router.route('/d')
-    .get(getAccounts)
+router.route('/create')
     .post(CreateAccount);
+
+router.route('/:accountNumber')
+    .get(getAccount);
+
+router.route('/user/:accountHolderId')
+    .get(getAccountsByUser);
+
+router.route('/update/:accountNumber')
+    .put(updateAccount);
 
 export default router;
