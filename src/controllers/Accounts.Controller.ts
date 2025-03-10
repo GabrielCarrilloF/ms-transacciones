@@ -6,9 +6,9 @@ import { Account } from '../domain/entities/Account';
 
 
 export async function CreateAccount(req: Request, res: Response): Promise<void> {
-    const { account_type, account_holder_id, holder_name, balance = 0, currency, status = 'active' } = req.body;
+    const { account_type, account_holder_id, holder_name, balance = 0, currency= 'COP', status = 'active' } = req.body;
 
-    if (!account_type || !account_holder_id || !holder_name || balance === undefined || !currency) {
+    if (!account_type || !account_holder_id || !holder_name ) {
         res.status(400).json({
             status: 400,
             message: 'Missing required fields'

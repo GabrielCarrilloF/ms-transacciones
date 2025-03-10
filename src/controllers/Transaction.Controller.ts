@@ -249,3 +249,62 @@ export async function depositFunds(req: Request, res: Response): Promise<void> {
         });
     }
 }
+
+export async function listAllTransfers(req: Request, res: Response): Promise<void> {
+    try {
+        const transfers = await queryDatabase(
+            'SELECT * FROM transactions'
+        );
+
+        res.json({
+            status: 200,
+            message: 'Transfers retrieved successfully',
+            transfers
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 500,
+            message: 'Error retrieving transfers',
+            error: error.message
+        });
+    }
+}
+
+export async function getTransferById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).json({
+            status: 400,
+            message: 'Missing required field: id'
+        });
+        return;
+    }
+
+    try {
+        const transfer = await queryDatabase(
+            'SELECT * FROM transactions WHERE id = ?',
+            [id]
+        );
+
+        if (transfer.length === 0) {
+            res.status(404).json({
+                status: 404,
+                message: 'Transfer not found'
+            });
+            return;
+        }
+
+        res.json({
+            status: 200,
+            message: 'Transfer retrieved successfully',
+            transfer: transfer[0]
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 500,
+            message: 'Error retrieving transfer',
+            error: error.message
+        });
+    }
+}

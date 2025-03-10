@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { transferFunds, withdrawFunds, depositFunds } from '../controllers/Transaction.Controller';
+import { transferFunds, withdrawFunds, depositFunds, getTransferById, listAllTransfers } from '../controllers/Transaction.Controller';
 
 const router = Router();
 
@@ -19,5 +19,11 @@ router.route('/withdraw')
 
 router.route('/deposit')
     .post(depositFunds);
+
+router.route('/transfers')
+    .get(listAllTransfers);
+
+router.route('/transfers/:id')
+    .get(getTransferById);
 
 export default router;
