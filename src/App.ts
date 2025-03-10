@@ -2,6 +2,7 @@ import express, { Application } from "express"
 import morgan from "morgan"
 import IndexRoutes from "./routers/Index.Routes"
 import AccountsRoutes from "./routers/Accounts.Routes"
+import TrnsactionRoutes from "./routers/Transaction.Routes"
 
 export class App {
     private app: Application;
@@ -25,6 +26,7 @@ export class App {
     routes() {
         this.app.use(IndexRoutes);
         this.app.use('/accounts', AccountsRoutes);
+        this.app.use('/transactions', TrnsactionRoutes);
     }
 
     async listen() {
